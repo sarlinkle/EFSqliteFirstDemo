@@ -2,9 +2,17 @@
 {
     internal class Program
     {
+        private static string GetSqliteDbPath()
+        {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            return System.IO.Path.Join(path, "blogging.db");
+        }
         static void Main(string[] args)
         {
-            using var db = new BloggingContext();
+            var dbPath = Program.GetSqliteDbPath();
+
+            using var db = new BloggingContext(dbPath);
 
             // Note: This sample requires the database to be created before running.
             Console.WriteLine($"Database path: {db.DbPath}.");
